@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #050714;
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Gold Gradient Shimmer Text */
+.gold-text-gradient {
+  background: linear-gradient(135deg, #FFF6D1 0%, #F5D061 25%, #E5A93C 50%, #FFDF73 75%, #D49323 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-text-shine {
+  background: linear-gradient(
+    90deg,
+    #d4af37 0%,
+    #fff2b2 25%,
+    #f3c44a 50%,
+    #ffffff 75%,
+    #d4af37 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* 3D Book Transforms */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.perspective-1500 {
+  perspective: 1500px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+/* Luxury Gold Border Frame */
+.gold-royal-border {
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, #facc15, #854d0e, #fde047, #ca8a04, #fef08a) 1;
+}
+
+.gold-glow-box {
+  box-shadow: 0 0 35px rgba(234, 179, 8, 0.3), inset 0 0 20px rgba(250, 204, 21, 0.15);
+}
+
+.gold-glow-box-strong {
+  box-shadow: 0 0 60px rgba(250, 204, 21, 0.5), inset 0 0 30px rgba(234, 179, 8, 0.3);
+}
+
+/* Radial Glows */
+.radial-halo {
+  background: radial-gradient(circle at center, rgba(255, 191, 0, 0.35) 0%, rgba(255, 119, 0, 0.15) 45%, transparent 70%);
+}
+
+.radial-diya-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(255, 230, 120, 0.7) 0%, rgba(255, 130, 20, 0.35) 40%, transparent 70%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050714;
+}
+::-webkit-scrollbar-thumb {
+  background: #ca8a04;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #eab308;
+}
