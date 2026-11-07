@@ -6,23 +6,13 @@ import { AnimatedGreetingSequence } from './components/AnimatedGreetingSequence'
 import { BackgroundVideo } from './components/BackgroundVideo';
 import { ParticleCanvas } from './components/ParticleCanvas';
 import { FallingPetals } from './components/FallingPetals';
-import { AudioController } from './components/AudioController';
 
 export default function App() {
   // Journey Stages: 'welcome' | 'book' | 'celebration'
   const [stage, setStage] = useState('welcome');
-  const [isStarted, setIsStarted] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-
-  // Toggle sound for video
-  const handleToggleMute = () => {
-    setIsMuted(!isMuted);
-    setIsStarted(true);
-  };
 
   // Handler for starting the journey from Welcome Screen
   const handleProceedFromWelcome = () => {
-    setIsStarted(true);
     setStage('book');
   };
 
@@ -33,8 +23,8 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden text-white font-sans bg-[#040614]">
-      {/* Background WhatsApp Video with Audio */}
-      <BackgroundVideo isMuted={isMuted} isStarted={isStarted} />
+      {/* Background WhatsApp Video with Audio (Autoplays with sound) */}
+      <BackgroundVideo />
 
       {/* Background Interactive Particle Canvas */}
       <ParticleCanvas 
@@ -49,7 +39,7 @@ export default function App() {
       />
 
       {/* ============================================================== */}
-      {/* UNIFIED TOP BAR (ZERO COLLISIONS ON MOBILE & DESKTOP)          */}
+      {/* CLEAN MINIMAL TOP HEADER (NO SOUND BUTTON, ZERO CLUTTER)       */}
       {/* ============================================================== */}
       <header className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-3.5 sm:px-6 py-2.5 sm:py-3.5 pointer-events-none">
         {/* Brand Logo & Auspicious Date */}
@@ -63,11 +53,6 @@ export default function App() {
               8 Nov 2026
             </span>
           </div>
-        </div>
-
-        {/* Audio Controller (Controls the WhatsApp video music) */}
-        <div className="pointer-events-auto">
-          <AudioController isMuted={isMuted} onToggleMute={handleToggleMute} />
         </div>
       </header>
 
