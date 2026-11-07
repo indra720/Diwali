@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Sparkles, BookOpen, Star, Calendar } from 'lucide-react';
+import { playAudio } from '../utils/media';
 
 export const BookScene = ({ onBookOpened }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [pageTurnStep, setPageTurnStep] = useState(0);
 
   const handleOpenBook = () => {
+    playAudio();
     if (isOpen) return;
     setIsOpen(true);
 

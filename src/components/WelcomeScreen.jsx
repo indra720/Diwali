@@ -1,19 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, ChevronRight, Calendar } from 'lucide-react';
+import { Sparkles, ChevronRight, Calendar, Volume2 } from 'lucide-react';
 import { Diya } from './Diya';
 import { HangingLanterns } from './HangingLanterns';
+import { playAudio } from '../utils/media';
 
 export const WelcomeScreen = ({ onProceed }) => {
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  const handleStart = () => {
+    playAudio();
+    onProceed();
+  };
+
+  const handleScreenTap = () => {
+    if (!hasInteracted) {
+      setHasInteracted(true);
+      playAudio();
+    }
+  };
+
   return (
-    <div className="relative h-screen max-h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-4 sm:py-6 overflow-hidden select-none">
+    <div 
+      className="relative h-screen max-h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-4 sm:py-6 overflow-hidden select-none"
+      onClick={handleScreenTap}
+      onTouchStart={handleScreenTap}
+    >
       {/* Hanging Festive Lanterns */}
       <HangingLanterns />
 
       {/* Radial Center Glow */}
       <div className="absolute w-[450px] h-[450px] rounded-full blur-[100px] bg-amber-500/15 pointer-events-none -translate-y-10" />
 
-      {/* TOP SPACER (keeps distance from the fixed top bar) */}
+      {/* TOP SPACER */}
       <div className="h-10 sm:h-12 shrink-0" />
 
       {/* MAIN CONTENT CARD */}
@@ -96,7 +115,7 @@ export const WelcomeScreen = ({ onProceed }) => {
           <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-300 opacity-70 blur-md group-hover:opacity-100 transition duration-500 group-hover:scale-105 animate-pulse" />
 
           <button
-            onClick={onProceed}
+            onClick={handleStart}
             className="relative px-7 sm:px-11 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-stone-950 font-bold text-sm sm:text-base tracking-wider uppercase shadow-[0_0_30px_rgba(250,204,21,0.65)] hover:shadow-[0_0_45px_rgba(250,204,21,0.9)] transform transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2.5 cursor-pointer border-2 border-yellow-200"
           >
             <Sparkles className="w-4 h-4 text-stone-900 animate-spin-slow" />
