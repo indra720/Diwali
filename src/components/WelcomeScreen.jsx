@@ -17,8 +17,14 @@ export const WelcomeScreen = ({ onProceed }) => {
       {/* Hanging Festive Lanterns */}
       <HangingLanterns />
 
-      {/* Radial Center Glow */}
-      <div className="absolute w-[450px] h-[450px] rounded-full blur-[100px] bg-amber-500/15 pointer-events-none -translate-y-10" />
+      {/* Radial Center Glow (Lightweight GPU radial, zero software blur) */}
+      <div 
+        className="absolute w-[450px] h-[450px] rounded-full pointer-events-none -translate-y-10" 
+        style={{
+          background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%)',
+          transform: 'translateZ(0)'
+        }}
+      />
 
       {/* TOP SPACER */}
       <div className="h-10 sm:h-12 shrink-0" />
@@ -83,7 +89,13 @@ export const WelcomeScreen = ({ onProceed }) => {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="relative mb-5 sm:mb-8 flex items-center justify-center"
         >
-          <div className="absolute w-36 h-36 rounded-full bg-amber-500/25 blur-xl pointer-events-none" />
+          <div 
+            className="absolute w-36 h-36 rounded-full pointer-events-none" 
+            style={{
+              background: 'radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, transparent 70%)',
+              transform: 'translateZ(0)'
+            }}
+          />
 
           {/* Triad of Diya Lights */}
           <div className="flex items-center justify-center gap-4 sm:gap-8">

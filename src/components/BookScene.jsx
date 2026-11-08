@@ -13,15 +13,17 @@ export const BookScene = ({ onBookOpened }) => {
     setIsOpen(true);
     startMusicOnBookOpen();
 
-    // Trigger golden star & sparkle confetti burst
+    // Trigger golden star & sparkle confetti burst (smooth on mobile)
     try {
+      const isMobile = window.innerWidth < 768;
       confetti({
-        particleCount: 85,
-        spread: 100,
+        particleCount: isMobile ? 40 : 75,
+        spread: isMobile ? 80 : 100,
         origin: { y: 0.55 },
         colors: ['#ffd700', '#ffeb3b', '#ffa000', '#fff8e1', '#ff5722'],
         shapes: ['circle'],
-        scalar: 1.2
+        scalar: isMobile ? 1.0 : 1.2,
+        disableForReducedMotion: true
       });
     } catch (e) {}
 
@@ -52,28 +54,20 @@ export const BookScene = ({ onBookOpened }) => {
 
   return (
     <div className="relative h-screen max-h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-3 sm:py-5 overflow-hidden select-none perspective-2000">
-      {/* Background Starfield and Floating Stars */}
+      {/* Background Starfield and Floating Stars (GPU CSS keyframe, zero CPU) */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 24 }).map((_, i) => (
-          <motion.div
+        {Array.from({ length: 14 }).map((_, i) => (
+          <div
             key={i}
-            initial={{ opacity: 0.2 }}
-            animate={{
-              opacity: [0.2, 0.9, 0.2],
-              scale: [0.8, 1.4, 0.8],
-            }}
-            transition={{
-              duration: 2 + (i % 5),
-              repeat: Infinity,
-              delay: (i % 7) * 0.4
-            }}
-            className="absolute rounded-full bg-yellow-200"
+            className="absolute rounded-full bg-yellow-200 animate-twinkle"
             style={{
-              top: `${(i * 23) % 100}%`,
-              left: `${(i * 31) % 100}%`,
+              top: `${(i * 23) % 95}%`,
+              left: `${(i * 31) % 95}%`,
               width: (i % 3) + 2,
               height: (i % 3) + 2,
-              boxShadow: '0 0 6px #fde047'
+              animationDelay: `${(i * 0.4).toFixed(1)}s`,
+              animationDuration: `${2 + (i % 3)}s`,
+              transform: 'translateZ(0)'
             }}
           />
         ))}

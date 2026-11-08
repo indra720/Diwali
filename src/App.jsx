@@ -43,7 +43,7 @@ export default function App() {
       {/* ============================================================== */}
       <header className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-3.5 sm:px-6 py-2.5 sm:py-3.5 pointer-events-none">
         {/* Brand Logo & Auspicious Date */}
-        <div className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-900/80 backdrop-blur-md border border-yellow-500/40 shadow-sm">
+        <div className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-900/90 sm:bg-stone-900/80 backdrop-blur-none sm:backdrop-blur-md border border-yellow-500/40 shadow-sm">
           <span className="text-lg sm:text-xl">🪔</span>
           <div className="flex flex-col">
             <span className="text-[11px] sm:text-xs font-bold tracking-widest uppercase font-cinzel text-yellow-300 leading-none">

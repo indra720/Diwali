@@ -27,17 +27,12 @@ export const AnimatedGreetingSequence = () => {
         }}
       />
 
-      {/* Golden Light Pillar in center background */}
-      <motion.div
-        animate={{
-          opacity: [0.4, 0.75, 0.4],
-          scaleX: [0.9, 1.15, 0.9]
-        }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 sm:w-80 h-full pointer-events-none"
+      {/* Golden Light Pillar in center background (GPU accelerated without heavy filter blur) */}
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 sm:w-80 h-full pointer-events-none animate-diya-glow"
         style={{
-          background: 'radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.45) 0%, rgba(255, 140, 0, 0.15) 40%, transparent 80%)',
-          filter: 'blur(20px)'
+          background: 'radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.35) 0%, rgba(255, 140, 0, 0.12) 40%, transparent 80%)',
+          transform: 'translateZ(0)'
         }}
       />
 
@@ -131,7 +126,7 @@ export const AnimatedGreetingSequence = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="w-full px-4 sm:px-7 py-4 sm:py-6 rounded-2xl border border-yellow-500/40 bg-gradient-to-b from-[#111638]/85 via-[#0d102e]/90 to-[#07091d]/95 backdrop-blur-xl shadow-[0_0_35px_rgba(234,179,8,0.25)] relative overflow-hidden my-2"
+          className="w-full px-4 sm:px-7 py-4 sm:py-6 rounded-2xl border border-yellow-500/40 bg-[#0d102e]/95 sm:bg-[#111638]/85 backdrop-blur-none sm:backdrop-blur-xl shadow-[0_0_35px_rgba(234,179,8,0.25)] relative overflow-hidden my-2"
         >
           {/* Corner Ornaments */}
           <div className="absolute top-2 left-2 text-yellow-500/50 text-xs">✦</div>

@@ -1,24 +1,23 @@
 import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
 
-export const FallingPetals = ({ count = 22, active = true }) => {
+export const FallingPetals = ({ count = 16, active = true }) => {
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+  // Reduce petal count on mobile for buttery smooth 60fps
+  const effectiveCount = isMobile ? 8 : count;
+
   const petals = useMemo(() => {
-    return Array.from({ length: count }, (_, i) => {
+    return Array.from({ length: effectiveCount }, (_, i) => {
       const isMarigold = i % 3 !== 0; // 66% marigold, 33% rose
       return {
         id: i,
-        x: Math.random() * 100, // percentage
-        yStart: -20 - Math.random() * 40,
-        size: 14 + Math.random() * 16,
-        duration: 9 + Math.random() * 8,
-        delay: Math.random() * 6,
-        rotateStart: Math.random() * 360,
-        rotateEnd: Math.random() * 360 + 720,
-        swayAmplitude: 30 + Math.random() * 45,
-        type: isMarigold ? (Math.random() > 0.5 ? 'marigold-yellow' : 'marigold-orange') : 'rose-red',
+        left: `${(i * (100 / effectiveCount) + (Math.random() * 8 - 4)).toFixed(1)}%`,
+        size: Math.floor(12 + (i % 4) * 3),
+        duration: (8 + (i % 5) * 1.5).toFixed(1),
+        delay: (i * 0.7).toFixed(1),
+        type: isMarigold ? (i % 2 === 0 ? 'marigold-yellow' : 'marigold-orange') : 'rose-red',
       };
     });
-  }, [count]);
+  }, [effectiveCount]);
 
   if (!active) return null;
 
@@ -35,41 +34,19 @@ export const FallingPetals = ({ count = 22, active = true }) => {
         }
 
         return (
-          <motion.div
+          <div
             key={p.id}
-            initial={{
-              x: `${p.x}vw`,
-              y: `${p.yStart}vh`,
-              rotate: p.rotateStart,
-              opacity: 0,
-              scale: 0.8
-            }}
-            animate={{
-              y: ['0vh', '110vh'],
-              x: [
-                `${p.x}vw`,
-                `${p.x + (p.id % 2 === 0 ? 4 : -4)}vw`,
-                `${p.x - (p.id % 2 === 0 ? 3 : -3)}vw`,
-                `${p.x}vw`
-              ],
-              rotate: [p.rotateStart, p.rotateEnd],
-              opacity: [0, 0.9, 0.9, 0],
-              scale: [0.8, 1, 0.9]
-            }}
-            transition={{
-              duration: p.duration,
-              repeat: Infinity,
-              delay: p.delay,
-              ease: "linear"
-            }}
-            className="absolute shadow-sm"
+            className="absolute rounded-[60%_40%_60%_40%/70%_30%_70%_30%]"
             style={{
+              left: p.left,
+              top: '-5vh',
               width: p.size,
-              height: p.size * 1.3,
+              height: p.size * 1.25,
               background: bgStyle,
-              borderRadius: '60% 40% 60% 40% / 70% 30% 70% 30%',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.25)',
-              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))'
+              animation: `fallPetal ${p.duration}s linear infinite`,
+              animationDelay: `${p.delay}s`,
+              willChange: 'transform, opacity',
+              transform: 'translateZ(0)',
             }}
           />
         );

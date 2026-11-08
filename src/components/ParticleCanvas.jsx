@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { soundManager } from '../utils/audio';
 
 export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true }) => {
   const canvasRef = useRef(null);
@@ -7,8 +6,11 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
+
     let animationFrameId;
+    const isMobile = window.innerWidth < 768;
 
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
@@ -19,17 +21,17 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
     };
     window.addEventListener('resize', handleResize);
 
-    // Ambient floating golden dust & bokeh
-    const ambientCount = 65;
+    // Optimized particle counts: keeps mobile butter-smooth (zero lag)
+    const ambientCount = isMobile ? 22 : 45;
     const ambientParticles = [];
     for (let i = 0; i < ambientCount; i++) {
       ambientParticles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 2.5 + 0.8,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: -Math.random() * 0.5 - 0.2, // drifting upwards
-        alpha: Math.random() * 0.7 + 0.2,
+        radius: Math.random() * (isMobile ? 1.8 : 2.4) + 0.8,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: -Math.random() * 0.4 - 0.15, // drifting upwards
+        alpha: Math.random() * 0.6 + 0.25,
         pulseSpeed: Math.random() * 0.02 + 0.01,
         color: Math.random() > 0.4 ? '#fde047' : Math.random() > 0.5 ? '#f59e0b' : '#ffedd5',
       });
@@ -41,7 +43,7 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
 
     const fireworkColors = [
       ['#ffd700', '#ffeb3b', '#fff59d'], // Gold
-      ['#ff1744', '#ff5252', '#ff8a80'], // Crimson
+      ['#ff3366', '#ff6b8b', '#ffa4b6'], // Crimson Rose
       ['#ff9100', '#ffa726', '#ffe0b2'], // Saffron/Orange
       ['#00e676', '#69f0ae', '#b9f6ca'], // Emerald
       ['#e040fb', '#ea80fc', '#f3e5f5'], // Lotus violet
@@ -50,11 +52,12 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
 
     const createFirework = (targetX, targetY) => {
       const palette = fireworkColors[Math.floor(Math.random() * fireworkColors.length)];
-      const particleCount = 75 + Math.floor(Math.random() * 45);
+      // Lower particle count on mobile for zero lag
+      const count = isMobile ? 24 : 55;
 
-      for (let i = 0; i < particleCount; i++) {
+      for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 5.5 + 1.2;
+        const speed = Math.random() * (isMobile ? 3.5 : 4.8) + 1.0;
         fireworks.push({
           x: targetX,
           y: targetY,
@@ -62,19 +65,17 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
           vy: Math.sin(angle) * speed,
           color: palette[Math.floor(Math.random() * palette.length)],
           alpha: 1,
-          decay: Math.random() * 0.018 + 0.012,
-          radius: Math.random() * 2.2 + 1,
-          gravity: 0.065,
+          decay: Math.random() * 0.02 + 0.014,
+          radius: Math.random() * 1.8 + 1,
+          gravity: 0.055,
           friction: 0.965,
-          flicker: Math.random() > 0.3
         });
       }
     };
 
     const launchRocket = (startX, targetX, targetY) => {
-      const angle = Math.atan2(targetY - height, targetX - startX);
       const dist = Math.hypot(targetX - startX, targetY - height);
-      const speed = 12 + Math.random() * 4;
+      const speed = isMobile ? 10 : 13;
       rockets.push({
         x: startX,
         y: height,
@@ -87,18 +88,18 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
       });
     };
 
-    // Auto fireworks in celebration mode
     let lastAutoFirework = 0;
+    const autoFireworkInterval = isMobile ? 2600 : 1800;
 
     const render = (time) => {
       ctx.clearRect(0, 0, width, height);
 
-      // Render Ambient Golden Dust
+      // Render Ambient Golden Dust (FAST GPU path: no ctx.shadowBlur, no save/restore)
       for (let i = 0; i < ambientParticles.length; i++) {
         const p = ambientParticles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.alpha += Math.sin(time * p.pulseSpeed) * 0.008;
+        p.alpha += Math.sin(time * p.pulseSpeed) * 0.006;
 
         if (p.y < -10) {
           p.y = height + 10;
@@ -107,63 +108,64 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
 
-        ctx.save();
+        const effectiveAlpha = Math.max(0.1, Math.min(0.85, p.alpha));
+
+        // Soft outer glow using fast 2-pass circle instead of expensive software blur
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = effectiveAlpha * 0.35;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Crisp inner core
+        ctx.globalAlpha = effectiveAlpha;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = Math.max(0.1, Math.min(0.9, p.alpha));
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = p.color;
         ctx.fill();
-        ctx.restore();
       }
 
-      // If celebration mode, launch periodic fireworks
-      if (mode === 'celebration' && time - lastAutoFirework > 1600) {
+      // Periodic fireworks in celebration mode
+      if (mode === 'celebration' && time - lastAutoFirework > autoFireworkInterval) {
         lastAutoFirework = time;
         const tx = width * 0.15 + Math.random() * width * 0.7;
-        const ty = height * 0.12 + Math.random() * height * 0.38;
-        launchRocket(tx + (Math.random() - 0.5) * 80, tx, ty);
+        const ty = height * 0.12 + Math.random() * height * 0.32;
+        launchRocket(tx + (Math.random() - 0.5) * 60, tx, ty);
       }
 
       // Update & Draw Rockets
       for (let i = rockets.length - 1; i >= 0; i--) {
         const r = rockets[i];
         r.trail.push({ x: r.x, y: r.y });
-        if (r.trail.length > 7) r.trail.shift();
+        if (r.trail.length > 5) r.trail.shift();
 
         r.x += r.vx;
         r.y += r.vy;
 
         // Draw rocket trail
-        ctx.save();
+        ctx.fillStyle = '#ffaa00';
         for (let t = 0; t < r.trail.length; t++) {
           const pt = r.trail[t];
+          ctx.globalAlpha = (t / r.trail.length) * 0.7;
           ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 1.5 * (t / r.trail.length), 0, Math.PI * 2);
-          ctx.fillStyle = '#ffaa00';
-          ctx.globalAlpha = t / r.trail.length;
+          ctx.arc(pt.x, pt.y, 1.2 * (t / r.trail.length), 0, Math.PI * 2);
           ctx.fill();
         }
 
         // Rocket head
+        ctx.fillStyle = '#ffffff';
+        ctx.globalAlpha = 0.95;
         ctx.beginPath();
-        ctx.arc(r.x, r.y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#fff';
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#ffeb3b';
+        ctx.arc(r.x, r.y, 2, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
 
         // Check if rocket reached altitude
         if (r.y <= r.targetY || r.vy >= 0) {
           createFirework(r.x, r.y);
-          soundManager.playFireworkBurst();
           rockets.splice(i, 1);
         }
       }
 
-      // Update & Draw Fireworks
+      // Update & Draw Fireworks (High speed, zero lag)
       for (let i = fireworks.length - 1; i >= 0; i--) {
         const p = fireworks[i];
         p.vx *= p.friction;
@@ -178,17 +180,14 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
           continue;
         }
 
-        ctx.save();
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.alpha);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.flicker && Math.random() > 0.4 ? p.alpha * 0.4 : p.alpha;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = p.color;
         ctx.fill();
-        ctx.restore();
       }
 
+      ctx.globalAlpha = 1.0;
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -197,17 +196,19 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
     const handleCanvasClick = (e) => {
       if (!allowClickFireworks) return;
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const x = (e.clientX || (e.touches && e.touches[0]?.clientX) || width / 2) - rect.left;
+      const y = (e.clientY || (e.touches && e.touches[0]?.clientY) || height / 3) - rect.top;
       launchRocket(x + (Math.random() - 0.5) * 40, x, y);
     };
 
-    window.addEventListener('click', handleCanvasClick);
+    window.addEventListener('click', handleCanvasClick, { passive: true });
+    window.addEventListener('touchstart', handleCanvasClick, { passive: true });
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('click', handleCanvasClick);
+      window.removeEventListener('touchstart', handleCanvasClick);
     };
   }, [mode, allowClickFireworks]);
 
@@ -215,7 +216,7 @@ export const ParticleCanvas = ({ mode = 'ambient', allowClickFireworks = true })
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-10"
-      style={{ width: '100%', height: '100%' }}
+      style={{ width: '100%', height: '100%', transform: 'translateZ(0)' }}
     />
   );
 };

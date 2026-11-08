@@ -25,7 +25,7 @@ export const BackgroundVideo = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Background HTML5 Video (Plays visually muted initially) */}
+      {/* Background HTML5 Video (Hardware accelerated GPU layer) */}
       <video
         ref={videoRef}
         src="/assets/diwali-video.mp4"
@@ -35,12 +35,15 @@ export const BackgroundVideo = () => {
         loop
         preload="auto"
         muted={true}
+        disablePictureInPicture
+        disableRemotePlayback
         className="absolute inset-0 w-full h-full object-cover opacity-75"
+        style={{ transform: 'translateZ(0)', willChange: 'transform' }}
       />
 
-      {/* Luxury Royal Cinematic Dark Vignette Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#030617]/75 via-[#080d2b]/65 to-[#040614]/90 mix-blend-multiply" />
-      <div className="absolute inset-0 bg-black/35" />
+      {/* Luxury Royal Cinematic Dark Vignette Overlay (Fast GPU compositing, no software blend-mode) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#030617]/85 via-[#080d2b]/70 to-[#040614]/95" />
+      <div className="absolute inset-0 bg-black/25" />
     </div>
   );
 };
