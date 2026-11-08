@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Sparkles, BookOpen, Star, Calendar } from 'lucide-react';
+import { Sparkles, Star, Calendar } from 'lucide-react';
 import { startMusicOnBookOpen } from '../utils/media';
 
 export const BookScene = ({ onBookOpened }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [pageTurnStep, setPageTurnStep] = useState(0);
 
-  const handleOpenBook = () => {
-    startMusicOnBookOpen();
+  const executeBookOpening = () => {
     if (isOpen) return;
     setIsOpen(true);
+    startMusicOnBookOpen();
 
     // Trigger golden star & sparkle confetti burst
     try {
@@ -39,6 +39,16 @@ export const BookScene = ({ onBookOpened }) => {
       if (onBookOpened) onBookOpened();
     }, 2400);
   };
+
+  // Automatically begin opening the book ~350ms after entering this screen!
+  // Single-click flow: clicking "OPEN YOUR DIWALI SURPRISE" automatically opens the book into wishes!
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      executeBookOpening();
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="relative h-screen max-h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-3 sm:py-5 overflow-hidden select-none perspective-2000">
@@ -84,7 +94,7 @@ export const BookScene = ({ onBookOpened }) => {
           <span>8 NOVEMBER 2026 • DIWALI SPECIAL</span>
         </div>
         <h2 className="text-lg sm:text-2xl font-serif text-yellow-100 mt-1 font-semibold">
-          Your Personalized Diwali Storybook
+          Opening Your Diwali Storybook...
         </h2>
       </motion.div>
 
@@ -102,7 +112,7 @@ export const BookScene = ({ onBookOpened }) => {
           transition: { duration: 5, repeat: Infinity, ease: "easeInOut" }
         }}
         className="relative z-20 flex items-center justify-center cursor-pointer select-none my-auto"
-        onClick={handleOpenBook}
+        onClick={executeBookOpening}
         style={{ perspective: '1600px', transformStyle: 'preserve-3d' }}
       >
         {/* Under-Book Volumetric Golden Light Beam that erupts on open */}
@@ -119,7 +129,7 @@ export const BookScene = ({ onBookOpened }) => {
           />
         )}
 
-        {/* 3D Realistic Book Container (Responsive sizing: fits inside 100vh on mobile and desktop) */}
+        {/* 3D Realistic Book Container */}
         <div 
           className="relative w-[230px] sm:w-[280px] md:w-[310px] h-[315px] sm:h-[380px] md:h-[420px] rounded-r-2xl preserve-3d"
           style={{
@@ -282,24 +292,8 @@ export const BookScene = ({ onBookOpened }) => {
         </div>
       </motion.div>
 
-      {/* COMPACT INTERACTIVE BUTTON: "OPEN THE BOOK ✨" */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: isOpen ? 0 : 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.7 }}
-        className="z-30 pb-2 sm:pb-3 shrink-0"
-      >
-        <button
-          onClick={handleOpenBook}
-          className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-600 text-stone-950 font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_25px_rgba(250,204,21,0.6)] hover:shadow-[0_0_40px_rgba(250,204,21,0.85)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 cursor-pointer border border-yellow-200"
-        >
-          <BookOpen className="w-4 h-4 text-stone-950" />
-          <span className="font-extrabold tracking-widest font-sans">
-            OPEN THE BOOK ✨
-          </span>
-          <Sparkles className="w-3.5 h-3.5 text-stone-950 animate-spin-slow" />
-        </button>
-      </motion.div>
+      {/* BOTTOM SPACING */}
+      <div className="h-6 sm:h-8 shrink-0" />
     </div>
   );
 };
