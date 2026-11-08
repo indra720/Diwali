@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Sparkles, X } from 'lucide-react';
 import { soundManager } from '../utils/audio';
 
-export const SkyLanterns = ({ recipientName = "Riya Saini" }) => {
+export const SkyLanterns = ({ recipientName = "Riya" }) => {
   const [lanterns, setLanterns] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [customWish, setCustomWish] = useState("");

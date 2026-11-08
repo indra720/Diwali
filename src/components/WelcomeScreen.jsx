@@ -50,7 +50,7 @@ export const WelcomeScreen = ({ onProceed }) => {
           <Sparkles className="w-3 h-3 text-yellow-300 animate-pulse" />
         </motion.div>
 
-        {/* Personalized Recipient Greeting: Both Riya & Hemant Together */}
+        {/* Personalized Recipient Greeting: Riya */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export const WelcomeScreen = ({ onProceed }) => {
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-1 flex items-center justify-center flex-wrap gap-x-2">
             <span>Hey,</span>
             <span className="gold-text-shine font-serif font-extrabold drop-shadow-[0_4px_25px_rgba(250,204,21,0.6)]">
-              Riya & Hemant!
+              Riya!
             </span>
             <motion.span
               animate={{ scale: [1, 1.25, 1] }}

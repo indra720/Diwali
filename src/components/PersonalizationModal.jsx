@@ -5,7 +5,7 @@ import { X, Copy, Check, Share2, Sparkles, Send, MessageSquare } from 'lucide-re
 export const PersonalizationModal = ({
   isOpen,
   onClose,
-  currentTo = "Riya & Hemant",
+  currentTo = "Riya",
   currentFrom = "Indrajeet",
   currentMsg = "",
   onApply
@@ -48,7 +48,7 @@ export const PersonalizationModal = ({
   };
 
   const handleWhatsAppShare = () => {
-    const text = `✨ Hey ${recipient || 'Riya & Hemant'}! I've prepared a special magical Diwali surprise just for you for 8 November 2026. Open your surprise here: 🪔🎆\n${surpriseUrl}`;
+    const text = `✨ Hey ${recipient || 'Riya'}! I've prepared a special magical Diwali surprise just for you for 8 November 2026. Open your surprise here: 🪔🎆\n${surpriseUrl}`;
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -100,7 +100,7 @@ export const PersonalizationModal = ({
           </h3>
         </div>
         <p className="text-xs text-yellow-200/70 mb-4">
-          Diwali: <strong>8 November 2026</strong> • Dedicated to <strong>Riya & Hemant</strong>
+          Diwali: <strong>8 November 2026</strong> • Dedicated to <strong>Riya</strong>
         </p>
 
         <div className="space-y-3.5">

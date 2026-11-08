@@ -121,7 +121,7 @@ export const AnimatedGreetingSequence = () => {
           </div>
         </div>
 
-        {/* PERSONALIZED RECIPIENT BLESSING CARD: RIYA & HEMANT (NO SURNAMES) */}
+        {/* PERSONALIZED RECIPIENT BLESSING CARD: RIYA (NO SURNAME) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,11 +134,11 @@ export const AnimatedGreetingSequence = () => {
           <div className="absolute bottom-2 left-2 text-yellow-500/50 text-xs">✦</div>
           <div className="absolute bottom-2 right-2 text-yellow-500/50 text-xs">✦</div>
 
-          {/* Recipient Salutation: Riya & Hemant */}
+          {/* Recipient Salutation: Riya */}
           <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-yellow-200 mb-2.5 flex items-center justify-center gap-1.5 flex-wrap">
             <span>Dear</span>
             <span className="gold-text-gradient underline decoration-yellow-500/50 underline-offset-4 font-extrabold">
-              Riya & Hemant
+              Riya
             </span>
             <span>,</span>
           </h2>
@@ -146,7 +146,7 @@ export const AnimatedGreetingSequence = () => {
           {/* Heartfelt College Friendship Diwali Wishes */}
           <div className="space-y-2 text-xs sm:text-sm md:text-base text-yellow-50/95 font-sans font-normal leading-relaxed">
             <p>
-              To two of my most wonderful college friends — may this Diwali bring you boundless happiness, laughter, cherished college memories, and unstoppable success in everything you do!
+              To my most wonderful college friend — may this Diwali bring you boundless happiness, laughter, cherished memories, and unstoppable success in everything you do!
             </p>
             <p className="text-yellow-300 font-serif italic text-xs sm:text-sm">
               "May every diya bring a new reason to smile! ✨"

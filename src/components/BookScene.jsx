@@ -167,7 +167,7 @@ export const BookScene = ({ onBookOpened }) => {
               </div>
 
               <div className="text-center text-amber-800 text-[10px] sm:text-xs font-semibold pb-1">
-                Dedicated to Riya & Hemant
+                Dedicated to Riya
               </div>
             </div>
 
@@ -214,7 +214,7 @@ export const BookScene = ({ onBookOpened }) => {
             />
           </motion.div>
 
-          {/* FRONT COVER: Luxury Crimson & Gold with "FOR: RIYA & HEMANT" (NO SURNAME) */}
+          {/* FRONT COVER: Luxury Crimson & Gold with "FOR: RIYA" (NO SURNAME) */}
           <motion.div
             initial={false}
             animate={{
@@ -262,10 +262,10 @@ export const BookScene = ({ onBookOpened }) => {
                   Specially Made For You
                 </p>
 
-                {/* Recipient Gold Badge: FOR: RIYA & HEMANT (NO SURNAMES) */}
-                <div className="mt-2 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500/25 via-yellow-400/35 to-yellow-500/25 border border-yellow-400/70 shadow-sm">
+                {/* Recipient Gold Badge: FOR: RIYA (NO SURNAME) */}
+                <div className="mt-2 px-4 py-1 rounded-full bg-gradient-to-r from-yellow-500/25 via-yellow-400/35 to-yellow-500/25 border border-yellow-400/70 shadow-sm">
                   <span className="text-[10px] sm:text-xs font-bold tracking-wider text-yellow-100 font-sans uppercase">
-                    FOR: RIYA & HEMANT
+                    FOR: RIYA
                   </span>
                 </div>
               </div>
