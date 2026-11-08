@@ -5,19 +5,24 @@ export const registerVideoElement = (el) => {
   videoElement = el;
 };
 
-export const playAudio = () => {
-  if (videoElement) {
+// Starts the video sound right when the user clicks "OPEN THE BOOK"
+export const startMusicOnBookOpen = () => {
+  const el = videoElement || (typeof document !== 'undefined' ? document.querySelector('video') : null);
+  if (el) {
     try {
-      videoElement.muted = false;
-      videoElement.volume = 1.0;
-      const promise = videoElement.play();
+      el.currentTime = 0;
+      el.muted = false;
+      el.volume = 1.0;
+      const promise = el.play();
       if (promise !== undefined) {
         promise.catch((err) => {
-          console.log("Audio play pending user interaction:", err);
+          console.warn("Audio play on book open:", err);
         });
       }
     } catch (e) {
-      console.warn("Could not play video audio", e);
+      console.warn("Could not start audio on book open", e);
     }
   }
 };
+
+export const playAudio = startMusicOnBookOpen;
