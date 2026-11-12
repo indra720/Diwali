@@ -1,9 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles, ChevronRight, Calendar } from 'lucide-react';
-import { Diya } from './Diya';
-import { HangingLanterns } from './HangingLanterns';
-import { startMusicOnBookOpen } from '../utils/media';
+import React from "react";
+import { motion } from "framer-motion";
+import { Sparkles, ChevronRight, Calendar } from "lucide-react";
+import { Diya } from "./Diya";
+import { HangingLanterns } from "./HangingLanterns";
+import { startMusicOnBookOpen } from "../utils/media";
 
 export const WelcomeScreen = ({ onProceed }) => {
   const handleStart = () => {
@@ -18,11 +18,12 @@ export const WelcomeScreen = ({ onProceed }) => {
       <HangingLanterns />
 
       {/* Radial Center Glow (Lightweight GPU radial, zero software blur) */}
-      <div 
-        className="absolute w-[450px] h-[450px] rounded-full pointer-events-none -translate-y-10" 
+      <div
+        className="absolute w-[450px] h-[450px] rounded-full pointer-events-none -translate-y-10"
         style={{
-          background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%)',
-          transform: 'translateZ(0)'
+          background:
+            "radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%)",
+          transform: "translateZ(0)",
         }}
       />
 
@@ -30,7 +31,7 @@ export const WelcomeScreen = ({ onProceed }) => {
       <div className="h-10 sm:h-12 shrink-0" />
 
       {/* MAIN CONTENT CARD */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
@@ -50,7 +51,7 @@ export const WelcomeScreen = ({ onProceed }) => {
           <Sparkles className="w-3 h-3 text-yellow-300 animate-pulse" />
         </motion.div>
 
-        {/* Personalized Recipient Greeting: Riya */}
+        {/* Personalized Recipient Greeting: Hemant */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,11 +61,15 @@ export const WelcomeScreen = ({ onProceed }) => {
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-1 flex items-center justify-center flex-wrap gap-x-2">
             <span>Hey,</span>
             <span className="gold-text-shine font-serif font-extrabold drop-shadow-[0_4px_25px_rgba(250,204,21,0.6)]">
-              Riya!
+              Hemant!
             </span>
             <motion.span
               animate={{ scale: [1, 1.25, 1] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 1.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="inline-block text-red-500 text-2xl sm:text-4xl"
             >
               ❤️
@@ -89,11 +94,12 @@ export const WelcomeScreen = ({ onProceed }) => {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="relative mb-5 sm:mb-8 flex items-center justify-center"
         >
-          <div 
-            className="absolute w-36 h-36 rounded-full pointer-events-none" 
+          <div
+            className="absolute w-36 h-36 rounded-full pointer-events-none"
             style={{
-              background: 'radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, transparent 70%)',
-              transform: 'translateZ(0)'
+              background:
+                "radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, transparent 70%)",
+              transform: "translateZ(0)",
             }}
           />
 

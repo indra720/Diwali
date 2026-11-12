@@ -1,29 +1,30 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
-import { Diya } from './Diya';
+import React from "react";
+import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
+import { Diya } from "./Diya";
 
 export const AnimatedGreetingSequence = () => {
   // Left & Right flanking diyas data for desktop/tablet
   const leftDiyas = [
-    { id: 'l1', size: 'sm' },
-    { id: 'l2', size: 'md' },
-    { id: 'l3', size: 'lg' },
+    { id: "l1", size: "sm" },
+    { id: "l2", size: "md" },
+    { id: "l3", size: "lg" },
   ];
 
   const rightDiyas = [
-    { id: 'r1', size: 'sm' },
-    { id: 'r2', size: 'md' },
-    { id: 'r3', size: 'lg' },
+    { id: "r1", size: "sm" },
+    { id: "r2", size: "md" },
+    { id: "r3", size: "lg" },
   ];
 
   return (
     <div className="relative h-screen max-h-[100dvh] w-full flex flex-col justify-between items-center px-3 sm:px-6 py-4 overflow-hidden select-none">
       {/* Glossy Reflective Courtyard Floor Gradient */}
-      <div 
+      <div
         className="absolute bottom-0 inset-x-0 h-[40vh] pointer-events-none"
         style={{
-          background: 'linear-gradient(to top, rgba(4, 6, 21, 0.95) 0%, rgba(9, 13, 38, 0.7) 60%, transparent 100%)'
+          background:
+            "linear-gradient(to top, rgba(4, 6, 21, 0.95) 0%, rgba(9, 13, 38, 0.7) 60%, transparent 100%)",
         }}
       />
 
@@ -31,8 +32,9 @@ export const AnimatedGreetingSequence = () => {
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 sm:w-80 h-full pointer-events-none animate-diya-glow"
         style={{
-          background: 'radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.35) 0%, rgba(255, 140, 0, 0.12) 40%, transparent 80%)',
-          transform: 'translateZ(0)'
+          background:
+            "radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.35) 0%, rgba(255, 140, 0, 0.12) 40%, transparent 80%)",
+          transform: "translateZ(0)",
         }}
       />
 
@@ -86,7 +88,7 @@ export const AnimatedGreetingSequence = () => {
       {/* ============================================================== */}
       {/* CENTER CELEBRATION CONTENT (IMMEDIATELY SHOWN UPON OPENING)    */}
       {/* ============================================================== */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -121,7 +123,7 @@ export const AnimatedGreetingSequence = () => {
           </div>
         </div>
 
-        {/* PERSONALIZED RECIPIENT BLESSING CARD: RIYA (NO SURNAME) */}
+        {/* PERSONALIZED RECIPIENT BLESSING CARD: Hemant (NO SURNAME) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,16 +131,24 @@ export const AnimatedGreetingSequence = () => {
           className="w-full px-4 sm:px-7 py-4 sm:py-6 rounded-2xl border border-yellow-500/40 bg-[#0d102e]/95 sm:bg-[#111638]/85 backdrop-blur-none sm:backdrop-blur-xl shadow-[0_0_35px_rgba(234,179,8,0.25)] relative overflow-hidden my-2"
         >
           {/* Corner Ornaments */}
-          <div className="absolute top-2 left-2 text-yellow-500/50 text-xs">✦</div>
-          <div className="absolute top-2 right-2 text-yellow-500/50 text-xs">✦</div>
-          <div className="absolute bottom-2 left-2 text-yellow-500/50 text-xs">✦</div>
-          <div className="absolute bottom-2 right-2 text-yellow-500/50 text-xs">✦</div>
+          <div className="absolute top-2 left-2 text-yellow-500/50 text-xs">
+            ✦
+          </div>
+          <div className="absolute top-2 right-2 text-yellow-500/50 text-xs">
+            ✦
+          </div>
+          <div className="absolute bottom-2 left-2 text-yellow-500/50 text-xs">
+            ✦
+          </div>
+          <div className="absolute bottom-2 right-2 text-yellow-500/50 text-xs">
+            ✦
+          </div>
 
-          {/* Recipient Salutation: Riya */}
+          {/* Recipient Salutation: Hemant */}
           <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-yellow-200 mb-2.5 flex items-center justify-center gap-1.5 flex-wrap">
             <span>Dear</span>
             <span className="gold-text-gradient underline decoration-yellow-500/50 underline-offset-4 font-extrabold">
-              Riya
+              Hemant
             </span>
             <span>,</span>
           </h2>
@@ -146,7 +156,9 @@ export const AnimatedGreetingSequence = () => {
           {/* Heartfelt College Friendship Diwali Wishes */}
           <div className="space-y-2 text-xs sm:text-sm md:text-base text-yellow-50/95 font-sans font-normal leading-relaxed">
             <p>
-              To my most wonderful college friend — may this Diwali bring you boundless happiness, laughter, cherished memories, and unstoppable success in everything you do!
+              To my most wonderful college friend — may this Diwali bring you
+              boundless happiness, laughter, cherished memories, and unstoppable
+              success in everything you do!
             </p>
             <p className="text-yellow-300 font-serif italic text-xs sm:text-sm">
               "May every diya bring a new reason to smile! ✨"

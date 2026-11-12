@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
-import { Sparkles, Star, Calendar } from 'lucide-react';
-import { startMusicOnBookOpen } from '../utils/media';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import confetti from "canvas-confetti";
+import { Sparkles, Star, Calendar } from "lucide-react";
+import { startMusicOnBookOpen } from "../utils/media";
 
 export const BookScene = ({ onBookOpened }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,10 +20,10 @@ export const BookScene = ({ onBookOpened }) => {
         particleCount: isMobile ? 40 : 75,
         spread: isMobile ? 80 : 100,
         origin: { y: 0.55 },
-        colors: ['#ffd700', '#ffeb3b', '#ffa000', '#fff8e1', '#ff5722'],
-        shapes: ['circle'],
+        colors: ["#ffd700", "#ffeb3b", "#ffa000", "#fff8e1", "#ff5722"],
+        shapes: ["circle"],
         scalar: isMobile ? 1.0 : 1.2,
-        disableForReducedMotion: true
+        disableForReducedMotion: true,
       });
     } catch (e) {}
 
@@ -67,7 +67,7 @@ export const BookScene = ({ onBookOpened }) => {
               height: (i % 3) + 2,
               animationDelay: `${(i * 0.4).toFixed(1)}s`,
               animationDuration: `${2 + (i % 3)}s`,
-              transform: 'translateZ(0)'
+              transform: "translateZ(0)",
             }}
           />
         ))}
@@ -94,20 +94,32 @@ export const BookScene = ({ onBookOpened }) => {
 
       {/* 3D BOOK STAGE WRAPPER WITH DYNAMIC CAMERA ZOOM */}
       <motion.div
-        animate={isOpen ? {
-          scale: [1, 1.05, 2.3],
-          z: [0, 50, 450],
-          opacity: [1, 1, 0.1],
-          transition: { duration: 2.3, ease: [0.65, 0, 0.35, 1], times: [0, 0.3, 1] }
-        } : {
-          y: [-5, 5, -5],
-          rotateX: [2, 0, 2],
-          rotateZ: [-0.5, 0.5, -0.5],
-          transition: { duration: 5, repeat: Infinity, ease: "easeInOut" }
-        }}
+        animate={
+          isOpen
+            ? {
+                scale: [1, 1.05, 2.3],
+                z: [0, 50, 450],
+                opacity: [1, 1, 0.1],
+                transition: {
+                  duration: 2.3,
+                  ease: [0.65, 0, 0.35, 1],
+                  times: [0, 0.3, 1],
+                },
+              }
+            : {
+                y: [-5, 5, -5],
+                rotateX: [2, 0, 2],
+                rotateZ: [-0.5, 0.5, -0.5],
+                transition: {
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+              }
+        }
         className="relative z-20 flex items-center justify-center cursor-pointer select-none my-auto"
         onClick={executeBookOpening}
-        style={{ perspective: '1600px', transformStyle: 'preserve-3d' }}
+        style={{ perspective: "1600px", transformStyle: "preserve-3d" }}
       >
         {/* Under-Book Volumetric Golden Light Beam that erupts on open */}
         {isOpen && (
@@ -117,27 +129,28 @@ export const BookScene = ({ onBookOpened }) => {
             transition={{ duration: 1.8, ease: "easeOut" }}
             className="absolute z-50 pointer-events-none w-80 h-80 rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(255, 240, 160, 0.95) 0%, rgba(255, 180, 20, 0.75) 30%, rgba(255, 90, 0, 0.4) 60%, transparent 80%)',
-              filter: 'blur(30px)'
+              background:
+                "radial-gradient(circle, rgba(255, 240, 160, 0.95) 0%, rgba(255, 180, 20, 0.75) 30%, rgba(255, 90, 0, 0.4) 60%, transparent 80%)",
+              filter: "blur(30px)",
             }}
           />
         )}
 
         {/* 3D Realistic Book Container */}
-        <div 
+        <div
           className="relative w-[230px] sm:w-[280px] md:w-[310px] h-[315px] sm:h-[380px] md:h-[420px] rounded-r-2xl preserve-3d"
           style={{
-            boxShadow: isOpen 
-              ? '0 30px 80px rgba(255, 190, 0, 0.6), 0 0 120px rgba(255, 100, 0, 0.4)' 
-              : '0 20px 50px -10px rgba(0, 0, 0, 0.9), 0 10px 25px rgba(218, 165, 32, 0.25)'
+            boxShadow: isOpen
+              ? "0 30px 80px rgba(255, 190, 0, 0.6), 0 0 120px rgba(255, 100, 0, 0.4)"
+              : "0 20px 50px -10px rgba(0, 0, 0, 0.9), 0 10px 25px rgba(218, 165, 32, 0.25)",
           }}
         >
           {/* Book Spine (Left side thickness) */}
-          <div 
+          <div
             className="absolute left-0 top-0 bottom-0 w-7 bg-gradient-to-r from-[#2a040a] via-[#4a0812] to-[#2a040a] rounded-l-md -translate-x-full origin-right"
             style={{
-              transform: 'rotateY(-90deg)',
-              boxShadow: 'inset 0 0 10px rgba(0,0,0,0.8)'
+              transform: "rotateY(-90deg)",
+              boxShadow: "inset 0 0 10px rgba(0,0,0,0.8)",
             }}
           />
 
@@ -151,23 +164,36 @@ export const BookScene = ({ onBookOpened }) => {
           <div className="absolute inset-0 flex rounded-2xl overflow-hidden preserve-3d bg-[#fffdf0] border-2 border-yellow-600/40">
             {/* Left Page */}
             <div className="w-1/2 h-full bg-gradient-to-r from-[#f5ebd7] via-[#fffbf2] to-[#f7eedc] p-3 sm:p-5 flex flex-col justify-between border-r border-amber-900/15 relative">
-              <div className="absolute top-2 left-2 text-amber-700/60 font-serif text-sm">❖</div>
-              <div className="absolute top-2 right-2 text-amber-700/60 font-serif text-sm">❖</div>
-              <div className="absolute bottom-2 left-2 text-amber-700/60 font-serif text-sm">❖</div>
-              <div className="absolute bottom-2 right-2 text-amber-700/60 font-serif text-sm">❖</div>
+              <div className="absolute top-2 left-2 text-amber-700/60 font-serif text-sm">
+                ❖
+              </div>
+              <div className="absolute top-2 right-2 text-amber-700/60 font-serif text-sm">
+                ❖
+              </div>
+              <div className="absolute bottom-2 left-2 text-amber-700/60 font-serif text-sm">
+                ❖
+              </div>
+              <div className="absolute bottom-2 right-2 text-amber-700/60 font-serif text-sm">
+                ❖
+              </div>
 
               <div className="text-center mt-2">
-                <span className="text-amber-700 font-cinzel text-[9px] sm:text-[10px] tracking-widest uppercase">8 Nov 2026</span>
-                <h4 className="text-amber-950 font-serif font-bold text-xs sm:text-base mt-0.5">Festival of Lights</h4>
+                <span className="text-amber-700 font-cinzel text-[9px] sm:text-[10px] tracking-widest uppercase">
+                  8 Nov 2026
+                </span>
+                <h4 className="text-amber-950 font-serif font-bold text-xs sm:text-base mt-0.5">
+                  Festival of Lights
+                </h4>
                 <div className="w-10 h-0.5 bg-amber-600 mx-auto my-1.5" />
               </div>
 
               <div className="text-center text-amber-900/80 font-serif italic text-[11px] sm:text-xs leading-relaxed px-1">
-                "May this holy Diwali illuminate your life with infinite joy, laughter and success."
+                "May this holy Diwali illuminate your life with infinite joy,
+                laughter and success."
               </div>
 
               <div className="text-center text-amber-800 text-[10px] sm:text-xs font-semibold pb-1">
-                Dedicated to Riya
+                Dedicated to Hemant
               </div>
             </div>
 
@@ -192,11 +218,11 @@ export const BookScene = ({ onBookOpened }) => {
           <motion.div
             initial={false}
             animate={{
-              rotateY: pageTurnStep >= 1 ? -170 : 0
+              rotateY: pageTurnStep >= 1 ? -170 : 0,
             }}
             transition={{ duration: 1.4, ease: [0.25, 1, 0.5, 1] }}
             className="absolute inset-0 origin-left preserve-3d rounded-r-2xl pointer-events-none"
-            style={{ transformStyle: 'preserve-3d' }}
+            style={{ transformStyle: "preserve-3d" }}
           >
             {/* Front of inner page */}
             <div className="absolute inset-0 bg-[#fbf5e5] rounded-r-2xl border-l border-amber-900/30 p-4 backface-hidden shadow-xl flex flex-col justify-center items-center">
@@ -208,23 +234,24 @@ export const BookScene = ({ onBookOpened }) => {
               </p>
             </div>
             {/* Back of inner page */}
-            <div 
+            <div
               className="absolute inset-0 bg-[#f5ebd7] rounded-l-2xl border-r border-amber-900/30 p-4 backface-hidden shadow-xl"
-              style={{ transform: 'rotateY(180deg)' }}
+              style={{ transform: "rotateY(180deg)" }}
             />
           </motion.div>
 
-          {/* FRONT COVER: Luxury Crimson & Gold with "FOR: RIYA" (NO SURNAME) */}
+          {/* FRONT COVER: Luxury Crimson & Gold with "FOR: Hemant" (NO SURNAME) */}
           <motion.div
             initial={false}
             animate={{
-              rotateY: isOpen ? -180 : 0
+              rotateY: isOpen ? -180 : 0,
             }}
             transition={{ duration: 1.5, ease: [0.35, 0, 0.25, 1] }}
             className="absolute inset-0 origin-left preserve-3d rounded-r-2xl backface-hidden z-30"
             style={{
-              transformStyle: 'preserve-3d',
-              background: 'linear-gradient(135deg, #640d14 0%, #4a0812 40%, #2f040b 100%)',
+              transformStyle: "preserve-3d",
+              background:
+                "linear-gradient(135deg, #640d14 0%, #4a0812 40%, #2f040b 100%)",
             }}
           >
             <div className="absolute inset-2.5 sm:inset-4 rounded-r-xl border-2 border-yellow-500/70 shadow-[inset_0_0_15px_rgba(234,179,8,0.25)] flex flex-col justify-between p-3 sm:p-5 text-center overflow-hidden">
@@ -262,10 +289,10 @@ export const BookScene = ({ onBookOpened }) => {
                   Specially Made For You
                 </p>
 
-                {/* Recipient Gold Badge: FOR: RIYA (NO SURNAME) */}
+                {/* Recipient Gold Badge: FOR: Hemant (NO SURNAME) */}
                 <div className="mt-2 px-4 py-1 rounded-full bg-gradient-to-r from-yellow-500/25 via-yellow-400/35 to-yellow-500/25 border border-yellow-400/70 shadow-sm">
                   <span className="text-[10px] sm:text-xs font-bold tracking-wider text-yellow-100 font-sans uppercase">
-                    FOR: RIYA
+                    FOR: Hemant
                   </span>
                 </div>
               </div>
@@ -274,7 +301,9 @@ export const BookScene = ({ onBookOpened }) => {
               <div className="relative z-10 pb-0.5">
                 <div className="flex items-center justify-center gap-1.5 text-yellow-400/80 text-[9px] sm:text-[10px]">
                   <span>✦</span>
-                  <span className="tracking-widest font-sans uppercase">Open With Love</span>
+                  <span className="tracking-widest font-sans uppercase">
+                    Open With Love
+                  </span>
                   <span>✦</span>
                 </div>
               </div>

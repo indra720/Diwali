@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { X, Copy, Check, Share2, Sparkles, Send, MessageSquare } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  X,
+  Copy,
+  Check,
+  Share2,
+  Sparkles,
+  Send,
+  MessageSquare,
+} from "lucide-react";
 
 export const PersonalizationModal = ({
   isOpen,
   onClose,
-  currentTo = "Riya",
+  currentTo = "Hemant",
   currentFrom = "Indrajeet",
   currentMsg = "",
-  onApply
+  onApply,
 }) => {
   const [recipient, setRecipient] = useState(currentTo);
   const [sender, setSender] = useState(currentFrom);
@@ -20,10 +28,10 @@ export const PersonalizationModal = ({
     const origin = window.location.origin;
     const pathname = window.location.pathname;
     const params = new URLSearchParams();
-    if (recipient) params.set('to', recipient);
-    if (sender) params.set('from', sender);
+    if (recipient) params.set("to", recipient);
+    if (sender) params.set("from", sender);
     if (message && message.trim()) {
-      params.set('msg', message.trim());
+      params.set("msg", message.trim());
     }
     return `${origin}${pathname}?${params.toString()}`;
   };
@@ -36,11 +44,11 @@ export const PersonalizationModal = ({
       setCopied(true);
       setTimeout(() => setCopied(false), 2400);
     } catch (e) {
-      const input = document.createElement('input');
+      const input = document.createElement("input");
       input.value = surpriseUrl;
       document.body.appendChild(input);
       input.select();
-      document.execCommand('copy');
+      document.execCommand("copy");
       document.body.removeChild(input);
       setCopied(true);
       setTimeout(() => setCopied(false), 2400);
@@ -48,9 +56,9 @@ export const PersonalizationModal = ({
   };
 
   const handleWhatsAppShare = () => {
-    const text = `✨ Hey ${recipient || 'Riya'}! I've prepared a special magical Diwali surprise just for you for 8 November 2026. Open your surprise here: 🪔🎆\n${surpriseUrl}`;
+    const text = `✨ Hey ${recipient || "Hemant"}! I've prepared a special magical Diwali surprise just for you for 8 November 2026. Open your surprise here: 🪔🎆\n${surpriseUrl}`;
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, "_blank");
   };
 
   const handleNativeShare = async () => {
@@ -100,7 +108,8 @@ export const PersonalizationModal = ({
           </h3>
         </div>
         <p className="text-xs text-yellow-200/70 mb-4">
-          Diwali: <strong>8 November 2026</strong> • Dedicated to <strong>Riya</strong>
+          Diwali: <strong>8 November 2026</strong> • Dedicated to{" "}
+          <strong>Hemant</strong>
         </p>
 
         <div className="space-y-3.5">
@@ -157,12 +166,16 @@ export const PersonalizationModal = ({
                 onClick={handleCopy}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer transition-all shrink-0 ${
                   copied
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-yellow-500 text-stone-950 hover:bg-yellow-400 shadow-md'
+                    ? "bg-emerald-600 text-white"
+                    : "bg-yellow-500 text-stone-950 hover:bg-yellow-400 shadow-md"
                 }`}
               >
-                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copied ? 'Copied!' : 'Copy'}</span>
+                {copied ? (
+                  <Check className="w-3.5 h-3.5" />
+                ) : (
+                  <Copy className="w-3.5 h-3.5" />
+                )}
+                <span>{copied ? "Copied!" : "Copy"}</span>
               </button>
             </div>
           </div>

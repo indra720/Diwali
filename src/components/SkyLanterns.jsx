@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Sparkles, X } from 'lucide-react';
-import { soundManager } from '../utils/audio';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, Sparkles, X } from "lucide-react";
+import { soundManager } from "../utils/audio";
 
-export const SkyLanterns = ({ recipientName = "Riya" }) => {
+export const SkyLanterns = ({ recipientName = "Hemant" }) => {
   const [lanterns, setLanterns] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [customWish, setCustomWish] = useState("");
@@ -12,7 +12,7 @@ export const SkyLanterns = ({ recipientName = "Riya" }) => {
     "Infinite Happiness & Golden Health 🌟",
     "Big Career Success & Joy in 2026-27 🚀",
     "Lifelong Friendship & Beautiful Memories ❤️",
-    "May All Your Dreams Come True ✨"
+    "May All Your Dreams Come True ✨",
   ];
 
   const releaseLantern = (wishText) => {
@@ -47,12 +47,12 @@ export const SkyLanterns = ({ recipientName = "Riya" }) => {
             key={l.id}
             initial={{
               x: `${l.startX}vw`,
-              y: '105vh',
+              y: "105vh",
               opacity: 0,
               scale: l.scale * 0.7,
             }}
             animate={{
-              y: '-20vh',
+              y: "-20vh",
               x: `calc(${l.startX}vw + ${l.driftX}px)`,
               opacity: [0, 0.95, 0.95, 0.7, 0],
               scale: [l.scale * 0.7, l.scale, l.scale * 0.5],
@@ -66,19 +66,24 @@ export const SkyLanterns = ({ recipientName = "Riya" }) => {
             {/* Lantern Glowing Body */}
             <div className="relative flex flex-col items-center">
               {/* Outer Golden/Amber Halo */}
-              <div 
+              <div
                 className="w-14 sm:w-16 h-20 sm:h-22 rounded-t-2xl rounded-b-lg border border-yellow-300/60 shadow-[0_0_35px_rgba(255,160,0,0.85)] flex flex-col items-center justify-between p-2 relative overflow-hidden"
                 style={{
-                  background: 'linear-gradient(to bottom, rgba(255, 140, 0, 0.9) 0%, rgba(255, 200, 50, 0.95) 60%, rgba(255, 100, 0, 0.85) 100%)',
+                  background:
+                    "linear-gradient(to bottom, rgba(255, 140, 0, 0.9) 0%, rgba(255, 200, 50, 0.95) 60%, rgba(255, 100, 0, 0.85) 100%)",
                 }}
               >
                 {/* Internal Candle Flame */}
-                <motion.div 
+                <motion.div
                   animate={{
                     scale: [0.9, 1.15, 0.95],
-                    opacity: [0.8, 1, 0.85]
+                    opacity: [0.8, 1, 0.85],
                   }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   className="w-3.5 h-6 rounded-full bg-white blur-[0.8px] shadow-[0_0_15px_#fff]"
                 />
 
@@ -133,7 +138,8 @@ export const SkyLanterns = ({ recipientName = "Riya" }) => {
                 </h4>
               </div>
               <p className="text-xs text-yellow-200/70 mb-4">
-                Send your prayers & wishes into the starry Diwali night sky for {recipientName}!
+                Send your prayers & wishes into the starry Diwali night sky for{" "}
+                {recipientName}!
               </p>
 
               {/* Quick Wishes */}
@@ -165,7 +171,7 @@ export const SkyLanterns = ({ recipientName = "Riya" }) => {
                     placeholder="e.g. Always be happy..."
                     className="flex-1 px-3 py-1.5 rounded-lg bg-stone-900 border border-yellow-500/40 text-yellow-100 text-xs focus:outline-none focus:border-yellow-400"
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') releaseLantern(customWish);
+                      if (e.key === "Enter") releaseLantern(customWish);
                     }}
                   />
                   <button
